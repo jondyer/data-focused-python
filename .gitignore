@@ -1,1 +1,7 @@
+*.pa2
+
+hw1/\.ipynb_checkpoints/
+hw2/\.ipynb_checkpoints/
+
+
 */.ipynb_checkpoints/*
