@@ -9,7 +9,7 @@ with open('cme.20190118.c.pa2', 'r') as read_file:
     # with open('CL_expirations_and_settlements.txt','w') as write_file:
     for line in read_file: 
         # B-type futures 
-        if (line[0]=='B' and (line[5:7]=='CL' or line[5:7]=='LO')):
+        if (line[0]=='B' and (line[5:15]=='CL        ' or line[5:15]=='LO        ')):
             commodity_code = line[5:7]
             contract_type = line[15:18]
             
@@ -55,7 +55,7 @@ with open('cme.20190118.c.pa2', 'r') as read_file:
                 
         #81-type futures
         elif(line[0:2]=='81'):
-            if(line[15:17]=='CL'):
+            if(line[15:25]=='CL        '):
                 futures_code = line[15:17]
                 
                 # check to make sure we're in the right time frame
