@@ -1,5 +1,6 @@
 """
 @author: Jonathan Dyer & Brian Rhindress
+1/29/2019
 """
 data_1 = []
 data_2 = []
