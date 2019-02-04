@@ -34,14 +34,14 @@ for tup in records3:
 
 # 1d
 cat_set = set(line[1] for line in records3 if line[1] != 'Category')
-date_set = set(line[2] for line in records3 if line[1] != 'Date')
+date_set = set(line[2] for line in records3 if line[2] != 'Date')
 
 print()
 print('Categories:', cat_set, '\n')
 print('Dates:     ', date_set, '\n')
 
 # 1e
-rec_num_to_record = {line_num : records[line_num] for line_num in range(0,len(records3),1) }
+rec_num_to_record = {line_num : records3[line_num] for line_num in range(0,len(records3),1) }
 
 for rn in range(len(rec_num_to_record)):
 		    print('{:3d}: {}'.format(rn,
