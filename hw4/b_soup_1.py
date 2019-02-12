@@ -14,31 +14,31 @@ t_chart_tables = bsyc.findAll('table', { "class" : "t-chart" } )
 # since len t_chart_table = 1
 t_chart_table = t_chart_tables[0]
 
-# initialize our final list of lists 
+# initialize our final list of lists
 daily_yield_curves = []
 
-# for each row in the t-chart 
+# for each row in the t-chart
 for r in t_chart_table.children:
 
 	# initialize a new data list for the table row (date)
 	data_list = []
 
-	# for each data point in the row, place into a list 
+	# for each data point in the row, place into a list
 	for d in r.children:
 
 		data = d.contents[0]
 
-		try: # convert to floats 
+		try: # convert to floats
 			data = float(data)
 		except:
 			pass # string, no transformation
 
 		data_list.append(data)
 
-	# add this row list to the list of lists 
+	# add this row list to the list of lists
 	daily_yield_curves.append(data_list)
 
-# remove the '2 mo' interest rates 
+# remove the '2 mo' interest rates
 for c in daily_yield_curves:
 	c.pop(2)
 
@@ -48,7 +48,7 @@ for i in daily_yield_curves:
 
 ##### Now write output #####
 with open('daily_yield_curves.txt','w') as output:
-    
+
     ### Table 1 output (B-records) ###
     column_width = 11
     column_label_1 = daily_yield_curves[0]
@@ -70,7 +70,7 @@ with open('daily_yield_curves.txt','w') as output:
         output.write('\n')
 
 
-### Part B 
+### Part B
 ### Source: https://matplotlib.org/gallery/mplot3d/surface3d.html
 # This import registers the 3D projection, but is otherwise unused.
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
@@ -84,16 +84,16 @@ import numpy as np
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-import datetime 
+import datetime
 start_date = datetime.datetime(2018, 1, 2)
 
 first = True
 for row in daily_yield_curves[1:]:
-	
+
 	# Finding dist from first /1/02/18
 	row_date_list = row[0].split('/')
 	row_date = datetime.datetime(int('20'+row_date_list[2]),
-		int(row_date_list[0]), int(row_date_list[1]))	
+		int(row_date_list[0]), int(row_date_list[1]))
 	days_diff = row_date - start_date
 
 	if first:
@@ -101,7 +101,7 @@ for row in daily_yield_curves[1:]:
 		Y = np.array([1, 3, 6, 12, 24, 36, 60, 84, 120, 240, 360])
 		Z = np.array(row[1:])
 		first = False
-	else: 
+	else:
 		X = np.vstack((X, np.repeat(days_diff.days,len(row[1:]))))
 		Y = np.vstack((Y,[1, 3, 6, 12, 24, 36, 60, 84, 120, 240, 360]))
 		Z = np.vstack((Z,np.array(row[1:])))
@@ -121,7 +121,32 @@ ax.set_zlim(0, 4)
 ax.zaxis.set_major_locator(LinearLocator(10))
 ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 
+# add labels
+ax.set_xlabel("Days since 01/02/18")
+ax.set_ylabel("Months to maturity")
+ax.set_zlabel("Rate")
+
+
 # Add a color bar which maps values to colors.
 fig.colorbar(surf, shrink=0.5, aspect=5)
 
 plt.show()
+
+
+# now for the wireframe
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+
+ax.plot_wireframe(X, Y, Z)
+
+# Set the labels
+ax.set_xlabel("Days since 01/02/18")
+ax.set_ylabel("Months to maturity")
+ax.set_zlabel("Rate")
+
+
+plt.show()
+
+
+
+### Part C
