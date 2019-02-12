@@ -42,8 +42,8 @@ for r in t_chart_table.children:
 for c in daily_yield_curves:
 	c.pop(2)
 
-for i in daily_yield_curves:
-	print(i)
+# for i in daily_yield_curves:
+# 	print(i)
 
 
 ##### Now write output #####
@@ -106,9 +106,9 @@ for row in daily_yield_curves[1:]:
 		Y = np.vstack((Y,[1, 3, 6, 12, 24, 36, 60, 84, 120, 240, 360]))
 		Z = np.vstack((Z,np.array(row[1:])))
 
-print(X)
-print(Y)
-print(Z)
+# print(X)
+# print(Y)
+# print(Z)
 
 # Plot the surface.
 surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
@@ -155,10 +155,10 @@ import pandas as pd
 yield_curve_df = pd.DataFrame(data = [row[1:] for row in daily_yield_curves[1:]],
 	columns = daily_yield_curves[0:1][0][1:], index = [row[0] for row in daily_yield_curves[1:]])
 
-print(yield_curve_df)
+# print(yield_curve_df)
 
 # Plot DF
-yield_curve_df.plot()
+yield_curve_df.plot(title='Interest Rate Time Series, 2018')
 plt.show()
 
 
@@ -173,5 +173,5 @@ t_yield_curve_df_renamed = t_yield_curve_df.rename(index=col_names_to_ints)
 
 # print(t_yield_curve_df_renamed)
 # Plot it
-t_yield_curve_df_renamed.plot()
+t_yield_curve_df_renamed.plot(title='2018 Yield Curves, 20 Day Intervals')
 plt.show()
