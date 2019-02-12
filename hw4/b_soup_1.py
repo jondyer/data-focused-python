@@ -149,11 +149,10 @@ plt.show()
 
 
 ### Part C
-
 import pandas as pd
 
 # Make DF out of daily_yield_curves list of lists
-yield_curve_df = pd.DataFrame(data = [row[1:] for row in daily_yield_curves[1:]], 
+yield_curve_df = pd.DataFrame(data = [row[1:] for row in daily_yield_curves[1:]],
 	columns = daily_yield_curves[0:1][0][1:], index = [row[0] for row in daily_yield_curves[1:]])
 
 print(yield_curve_df)
@@ -162,10 +161,17 @@ print(yield_curve_df)
 yield_curve_df.plot()
 plt.show()
 
+
 #Transpose DF and slice out one of every 20 columns
 t_yield_curve_df = yield_curve_df.T[yield_curve_df.T.columns[[i for i in range(0,len(yield_curve_df),20)]]]
 
-#print(t_yield_curve_df)
-# Plot it 
-t_yield_curve_df.plot()
+# convert column names to numbers
+col_names_to_ints = { '1 mo' : 1, '3 mo' : 3, '6 mo' : 6, '1 yr' : 12, '2 yr' : 24,
+                        '3 yr' : 36, '5 yr' : 60, '7 yr' : 84, '10 yr' : 120, '20 yr' : 240, '30 yr' : 360 }
+
+t_yield_curve_df_renamed = t_yield_curve_df.rename(index=col_names_to_ints)
+
+# print(t_yield_curve_df_renamed)
+# Plot it
+t_yield_curve_df_renamed.plot()
 plt.show()
