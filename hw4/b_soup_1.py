@@ -148,5 +148,24 @@ ax.set_zlabel("Rate")
 plt.show()
 
 
-
 ### Part C
+
+import pandas as pd
+
+# Make DF out of daily_yield_curves list of lists
+yield_curve_df = pd.DataFrame(data = [row[1:] for row in daily_yield_curves[1:]], 
+	columns = daily_yield_curves[0:1][0][1:], index = [row[0] for row in daily_yield_curves[1:]])
+
+print(yield_curve_df)
+
+# Plot DF
+yield_curve_df.plot()
+plt.show()
+
+#Transpose DF and slice out one of every 20 columns
+t_yield_curve_df = yield_curve_df.T[yield_curve_df.T.columns[[i for i in range(0,len(yield_curve_df),20)]]]
+
+#print(t_yield_curve_df)
+# Plot it 
+t_yield_curve_df.plot()
+plt.show()
