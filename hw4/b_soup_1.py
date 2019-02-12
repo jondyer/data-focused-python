@@ -122,3 +122,63 @@ with open('daily_yield_curves.txt','w') as output:
         for value in row:
             output.write(str(value).ljust(column_width))
         output.write('\n')
+
+
+### Part B 
+### Source: https://matplotlib.org/gallery/mplot3d/surface3d.html
+# This import registers the 3D projection, but is otherwise unused.
+from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
+
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
+import numpy as np
+
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+
+# Make data.
+#X = days since 1/02/18 
+import datetime 
+start_date = datetime.datetime(2018, 1, 2)
+
+X = np.append([[]], [[]], axis = 0)
+
+for row in daily_yield_curves[1:]:
+	row_date_list = row[0].split('/')
+	print(row_date_list)
+	row_date = datetime.datetime(int('20'+row_date_list[2]),
+		int(row_date_list[0]), int(row_date_list[1]))	
+	days_diff = row_date - start_date
+	#print(np.repeat(days_diff.days,len(row[1:])))
+	if len(X) < 1:
+		X = np.repeat(days_diff.days,len(row[1:]))
+	else:
+		X = np.append(X,np.repeat(days_diff.days,len(row[1:])), axis = 0)
+#np.append([[1,1],[2,2]],[[3,3]], axis = 0)
+
+print(X)
+
+
+
+# X = np.arange()
+# X = np.arange(-5, 5, 0.25)
+# Y = np.arange(-5, 5, 0.25)
+# X, Y = np.meshgrid(X, Y)
+# R = np.sqrt(X**2 + Y**2)
+# Z = np.sin(R)
+
+# # Plot the surface.
+# surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
+#                        linewidth=0, antialiased=False)
+
+# # Customize the z axis.
+# ax.set_zlim(-1.01, 1.01)
+# ax.zaxis.set_major_locator(LinearLocator(10))
+# ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+
+# # Add a color bar which maps values to colors.
+# fig.colorbar(surf, shrink=0.5, aspect=5)
+
+# plt.show()
